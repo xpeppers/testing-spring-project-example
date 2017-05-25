@@ -1,4 +1,4 @@
-package it.xpeppers.infrastructure.repository;
+package it.xpeppers.repository;
 
 import it.xpeppers.model.Contact;
 import org.junit.Before;
@@ -10,20 +10,16 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.empty;
-import static org.hamcrest.Matchers.hasSize;
+import static com.google.common.collect.Lists.newArrayList;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class JPAContactRepositoryAdapterIT {
+public class ContactRepositoryIT {
 
     @Autowired
-    private JPAContactRepositoryAdapter repositoryAdapter;
-
-    @Autowired
-    private JPAContactRepository repository;
+    private ContactRepository repository;
 
     @Before
     public void setup() throws Exception {
@@ -31,34 +27,32 @@ public class JPAContactRepositoryAdapterIT {
     }
 
     @Test
-    public void
-    save_a_contact() throws Exception {
+    public void save_a_contact() throws Exception {
         Contact contact = new Contact();
         contact.setFirstName("First Name");
         contact.setLastName("Last Name");
         contact.setPhoneNumber("+39 329 654321");
 
-        repositoryAdapter.save(contact);
-        List<Contact> contacts = repositoryAdapter.all();
+        repository.save(contact);
+        List<Contact> contacts = newArrayList(repository.findAll());
 
         assertThat(contacts, hasSize(1));
     }
 
     @Test
-    public void
-    delete_a_contact() throws Exception {
+    public void delete_a_contact() throws Exception {
         Contact contact = new Contact();
         contact.setFirstName("First Name");
         contact.setLastName("Last Name");
         contact.setPhoneNumber("+39 329 654321");
 
-        repositoryAdapter.save(contact);
-        List<Contact> contacts = repositoryAdapter.all();
+        repository.save(contact);
+        List<Contact> contacts = newArrayList(repository.findAll());
 
         assertThat(contacts, hasSize(1));
 
-        repositoryAdapter.delete(contact);
+        repository.delete(contact);
 
-        assertThat(repositoryAdapter.all(), is(empty()));
+        assertThat(newArrayList(repository.findAll()), is(empty()));
     }
 }

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
@@ -23,13 +22,13 @@ public class ContactController {
     private ContactRepository repository;
 
     @RequestMapping(method = GET)
-    public List<Contact> all() {
-        return repository.all();
+    public Iterable<Contact> all() {
+        return repository.findAll();
     }
 
     @RequestMapping(value = "/{id}", method = GET)
     public Contact withId(@PathVariable("id") Integer id) {
-        return repository.withId(id);
+        return repository.findOne(id);
     }
 
     @RequestMapping(method = POST)
@@ -42,7 +41,7 @@ public class ContactController {
 
     @RequestMapping(value = "/{id}", method = PUT)
     public ResponseEntity<?> update(@PathVariable("id") Integer id, @Valid @RequestBody Contact update) {
-        Contact contact = repository.withId(id);
+        Contact contact = repository.findOne(id);
 
         contact.update(update);
 
@@ -54,7 +53,7 @@ public class ContactController {
 
     @RequestMapping(value = "/{id}", method = DELETE)
     public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
-        Contact contact = repository.withId(id);
+        Contact contact = repository.findOne(id);
 
         repository.delete(contact);
 

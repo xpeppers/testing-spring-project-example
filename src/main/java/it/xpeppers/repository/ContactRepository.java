@@ -1,17 +1,7 @@
 package it.xpeppers.repository;
 
 import it.xpeppers.model.Contact;
+import org.springframework.data.repository.CrudRepository;
 
-import java.util.List;
-
-public interface ContactRepository {
-
-    List<Contact> all();
-
-    Contact withId(Integer id);
-
-    Contact save(Contact contact);
-
-    void delete(Contact contact);
-
+public interface ContactRepository extends CrudRepository<Contact, Integer> {
 }

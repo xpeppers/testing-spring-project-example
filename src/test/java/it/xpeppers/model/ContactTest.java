@@ -30,8 +30,7 @@ public class ContactTest {
     }
 
     @Test
-    public void
-    fist_name_should_not_be_empty() throws Exception {
+    public void fist_name_should_not_be_empty() throws Exception {
         Contact contact = new Contact();
         contact.setFirstName(AN_EMPTY_STRING);
         contact.setLastName(A_VALID_LAST_NAME);
@@ -43,8 +42,7 @@ public class ContactTest {
     }
 
     @Test
-    public void
-    last_name_should_not_be_empty() throws Exception {
+    public void last_name_should_not_be_empty() throws Exception {
         Contact contact = new Contact();
         contact.setFirstName(A_VALID_FIRST_NAME);
         contact.setLastName(AN_EMPTY_STRING);
@@ -56,8 +54,7 @@ public class ContactTest {
     }
 
     @Test
-    public void
-    phone_number_should_not_be_empty() throws Exception {
+    public void phone_number_should_not_be_empty() throws Exception {
         Contact contact = new Contact();
         contact.setFirstName(A_VALID_FIRST_NAME);
         contact.setLastName(A_VALID_LAST_NAME);
@@ -69,8 +66,7 @@ public class ContactTest {
     }
 
     @Test
-    public void
-    phone_number_should_start_with_a_plus() throws Exception {
+    public void phone_number_should_start_with_a_plus() throws Exception {
         Contact contact = new Contact();
         contact.setFirstName(A_VALID_FIRST_NAME);
         contact.setLastName(A_VALID_LAST_NAME);
@@ -82,8 +78,7 @@ public class ContactTest {
     }
 
     @Test
-    public void
-    phone_number_should_have_an_international_prefix() throws Exception {
+    public void phone_number_should_have_an_international_prefix() throws Exception {
         Contact contact = new Contact();
         contact.setFirstName(A_VALID_FIRST_NAME);
         contact.setLastName(A_VALID_LAST_NAME);
@@ -95,8 +90,7 @@ public class ContactTest {
     }
 
     @Test
-    public void
-    phone_number_should_have_a_district_prefix() throws Exception {
+    public void phone_number_should_have_a_district_prefix() throws Exception {
         Contact contact = new Contact();
         contact.setFirstName(A_VALID_FIRST_NAME);
         contact.setLastName(A_VALID_LAST_NAME);
@@ -108,8 +102,7 @@ public class ContactTest {
     }
 
     @Test
-    public void
-    phone_number_should_have_a_customer_number_with_at_least_six_digits() throws Exception {
+    public void phone_number_should_have_a_customer_number_with_at_least_six_digits() throws Exception {
         Contact contact = new Contact();
         contact.setFirstName(A_VALID_FIRST_NAME);
         contact.setLastName(A_VALID_LAST_NAME);
@@ -121,8 +114,7 @@ public class ContactTest {
     }
 
     @Test
-    public void
-    a_valid_contact_should_not_have_constraints_violations() throws Exception {
+    public void a_valid_contact_should_not_have_constraints_violations() throws Exception {
         Contact contact = new Contact();
         contact.setFirstName(A_VALID_FIRST_NAME);
         contact.setLastName(A_VALID_LAST_NAME);
