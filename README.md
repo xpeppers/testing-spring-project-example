@@ -42,3 +42,18 @@ postgres=# create database contacts_test;
 ```bash
 $ mvn integration-test -P integration-test
 ```
+
+## Test Coverage
+
+
+### Only Unit Test
+```bash
+$ mvn cobertura:cobertura
+```
+
+### Unit and Integration Test 
+```bash
+$ mvn cobertura:cobertura-integration-test
+```
+
+Maven will generate the Cobertura code coverage report at `${project}/target/site/cobertura/index.html` 
