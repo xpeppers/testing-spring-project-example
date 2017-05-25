@@ -40,6 +40,19 @@ public class ContactRepositoryIT {
     }
 
     @Test
+    public void find_a_contact_by_id() throws Exception {
+        Contact contact = new Contact();
+        contact.setFirstName("First Name");
+        contact.setLastName("Last Name");
+        contact.setPhoneNumber("+39 329 654321");
+
+        Contact savedContact = repository.save(contact);
+        Contact foundContact = repository.findOne(savedContact.getId());
+
+        assertThat(foundContact, is(savedContact));
+    }
+
+    @Test
     public void delete_a_contact() throws Exception {
         Contact contact = new Contact();
         contact.setFirstName("First Name");
