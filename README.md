@@ -22,6 +22,24 @@ postgres=# create database contacts;
 $ mvn spring-boot:run
 ```
 
+### Save a contact
+
+```bash
+$ curl -v localhost:9000/contacts  -H "Content-Type: application/json" -d '{ "firstName": "matteo", "lastName": "pierro", "phoneNumber": "+39 329 654321"}'
+```
+
+### Retrieve a contact
+
+```bash
+$ curl -v localhost:9000/contacts/<id>
+```
+
+### Retrieve all contacts
+
+```bash
+$ curl -v localhost:9000/contacts
+```
+
 ## Run Test
 
 ### Run Unit Test
