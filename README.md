@@ -1,3 +1,9 @@
+## Requirements
+
+* Java 8
+* Maven 3.3.9
+* Docker 17.03.1-ce
+
 ## Setup Database
 
 ### Run PostgreSQL
