@@ -64,7 +64,7 @@ postgres=# create database contacts_test;
 
 #### Run
 ```bash
-$ mvn integration-test -P integration-test
+$ mvn test-compile failsafe:integration-test
 ```
 
 ## Test Coverage
