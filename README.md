@@ -56,28 +56,20 @@ $ mvn clean test
 
 ### Run Integration Test
 
-#### Create test schema
-
-```bash
-postgres=# create database contacts_test;
-```
-
-#### Run
 ```bash
 $ mvn test-compile failsafe:integration-test
 ```
 
 ## Test Coverage
 
-
 ### Only Unit Test
 ```bash
 $ mvn cobertura:cobertura
 ```
 
-### Unit and Integration Test 
+### Unit and Integration Test
 ```bash
 $ mvn cobertura:cobertura-integration-test
 ```
 
-Maven will generate the Cobertura code coverage report at `${project}/target/site/cobertura/index.html` 
+Maven will generate the Cobertura code coverage report at `${project}/target/site/cobertura/index.html`
