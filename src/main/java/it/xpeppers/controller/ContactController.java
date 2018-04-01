@@ -4,15 +4,10 @@ import it.xpeppers.model.Contact;
 import it.xpeppers.repository.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
-
-import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @RestController
 @RequestMapping("/contacts")
@@ -25,17 +20,17 @@ public class ContactController {
         this.repository = repository;
     }
 
-    @RequestMapping(method = GET)
+    @GetMapping
     public Iterable<Contact> all() {
         return repository.findAll();
     }
 
-    @RequestMapping(value = "/{id}", method = GET)
+    @GetMapping(value = "/{id}")
     public Contact withId(@PathVariable("id") Integer id) {
         return repository.findOne(id);
     }
 
-    @RequestMapping(method = POST)
+    @PostMapping
     public ResponseEntity<?> save(@Valid @RequestBody Contact contact) {
         Contact savedContact = repository.save(contact);
         return ResponseEntity
@@ -43,7 +38,7 @@ public class ContactController {
                 .build();
     }
 
-    @RequestMapping(value = "/{id}", method = PUT)
+    @PutMapping(value = "/{id}")
     public ResponseEntity<?> update(@PathVariable("id") Integer id, @Valid @RequestBody Contact update) {
         Contact contact = repository.findOne(id);
 
@@ -55,7 +50,7 @@ public class ContactController {
                 .build();
     }
 
-    @RequestMapping(value = "/{id}", method = DELETE)
+    @DeleteMapping(value = "/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Integer id) {
         Contact contact = repository.findOne(id);
 
