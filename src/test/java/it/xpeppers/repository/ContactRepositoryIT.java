@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
+import static it.xpeppers.model.ContactTest.aContact;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
@@ -22,46 +23,36 @@ public class ContactRepositoryIT {
     private ContactRepository repository;
 
     @Before
-    public void setup() throws Exception {
+    public void setup() {
         repository.deleteAll();
     }
 
     @Test
-    public void save_a_contact() throws Exception {
-        Contact contact = new Contact();
-        contact.setFirstName("First Name");
-        contact.setLastName("Last Name");
-        contact.setPhoneNumber("+39 329 654321");
+    public void saves_a_contact() {
+        Contact contact = aContact("First Name", "Last Name", "+39 329 654321");
 
         repository.save(contact);
-        List<Contact> contacts = newArrayList(repository.findAll());
 
+        List<Contact> contacts = newArrayList(repository.findAll());
         assertThat(contacts, hasSize(1));
     }
 
     @Test
-    public void find_a_contact_by_id() throws Exception {
-        Contact contact = new Contact();
-        contact.setFirstName("First Name");
-        contact.setLastName("Last Name");
-        contact.setPhoneNumber("+39 329 654321");
-
+    public void finds_a_contact_by_id() {
+        Contact contact = aContact("First Name", "Last Name", "+39 329 654321");
         Contact savedContact = repository.save(contact);
+
         Contact foundContact = repository.findOne(savedContact.getId());
 
         assertThat(foundContact, is(savedContact));
     }
 
     @Test
-    public void delete_a_contact() throws Exception {
-        Contact contact = new Contact();
-        contact.setFirstName("First Name");
-        contact.setLastName("Last Name");
-        contact.setPhoneNumber("+39 329 654321");
-
+    public void deletes_a_contact() {
+        Contact contact = aContact("First Name", "Last Name", "+39 329 654321");
         repository.save(contact);
-        List<Contact> contacts = newArrayList(repository.findAll());
 
+        List<Contact> contacts = newArrayList(repository.findAll());
         assertThat(contacts, hasSize(1));
 
         repository.delete(contact);

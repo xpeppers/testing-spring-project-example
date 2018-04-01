@@ -31,10 +31,7 @@ public class ContactTest {
 
     @Test
     public void fist_name_should_not_be_empty() throws Exception {
-        Contact contact = new Contact();
-        contact.setFirstName(AN_EMPTY_STRING);
-        contact.setLastName(A_VALID_LAST_NAME);
-        contact.setPhoneNumber(A_VALID_NUMBER);
+        Contact contact = aContact(AN_EMPTY_STRING, A_VALID_LAST_NAME, A_VALID_NUMBER);
 
         Set<ConstraintViolation<Contact>> violations = validator.validate(contact);
 
@@ -43,10 +40,7 @@ public class ContactTest {
 
     @Test
     public void last_name_should_not_be_empty() throws Exception {
-        Contact contact = new Contact();
-        contact.setFirstName(A_VALID_FIRST_NAME);
-        contact.setLastName(AN_EMPTY_STRING);
-        contact.setPhoneNumber(A_VALID_NUMBER);
+        Contact contact = aContact(A_VALID_FIRST_NAME, AN_EMPTY_STRING, A_VALID_NUMBER);
 
         Set<ConstraintViolation<Contact>> violations = validator.validate(contact);
 
@@ -55,10 +49,7 @@ public class ContactTest {
 
     @Test
     public void phone_number_should_not_be_empty() throws Exception {
-        Contact contact = new Contact();
-        contact.setFirstName(A_VALID_FIRST_NAME);
-        contact.setLastName(A_VALID_LAST_NAME);
-        contact.setPhoneNumber(AN_EMPTY_STRING);
+        Contact contact = aContact(A_VALID_FIRST_NAME, A_VALID_LAST_NAME, AN_EMPTY_STRING);
 
         Set<ConstraintViolation<Contact>> violations = validator.validate(contact);
 
@@ -67,10 +58,7 @@ public class ContactTest {
 
     @Test
     public void phone_number_should_start_with_a_plus() throws Exception {
-        Contact contact = new Contact();
-        contact.setFirstName(A_VALID_FIRST_NAME);
-        contact.setLastName(A_VALID_LAST_NAME);
-        contact.setPhoneNumber("39 329 1234555");
+        Contact contact = aContact(A_VALID_FIRST_NAME, A_VALID_LAST_NAME, "39 329 1234555");
 
         Set<ConstraintViolation<Contact>> violations = validator.validate(contact);
 
@@ -79,10 +67,7 @@ public class ContactTest {
 
     @Test
     public void phone_number_should_have_an_international_prefix() throws Exception {
-        Contact contact = new Contact();
-        contact.setFirstName(A_VALID_FIRST_NAME);
-        contact.setLastName(A_VALID_LAST_NAME);
-        contact.setPhoneNumber("+ 329 1234555");
+        Contact contact = aContact(A_VALID_FIRST_NAME, A_VALID_LAST_NAME, "+ 329 1234555");
 
         Set<ConstraintViolation<Contact>> violations = validator.validate(contact);
 
@@ -91,10 +76,7 @@ public class ContactTest {
 
     @Test
     public void phone_number_should_have_a_district_prefix() throws Exception {
-        Contact contact = new Contact();
-        contact.setFirstName(A_VALID_FIRST_NAME);
-        contact.setLastName(A_VALID_LAST_NAME);
-        contact.setPhoneNumber("+39 1234555");
+        Contact contact = aContact(A_VALID_FIRST_NAME, A_VALID_LAST_NAME, "+39 1234555");
 
         Set<ConstraintViolation<Contact>> violations = validator.validate(contact);
 
@@ -103,10 +85,7 @@ public class ContactTest {
 
     @Test
     public void phone_number_should_have_a_customer_number_with_at_least_six_digits() throws Exception {
-        Contact contact = new Contact();
-        contact.setFirstName(A_VALID_FIRST_NAME);
-        contact.setLastName(A_VALID_LAST_NAME);
-        contact.setPhoneNumber("+39 1234555");
+        Contact contact = aContact(A_VALID_FIRST_NAME, A_VALID_LAST_NAME, "+39 1234555");
 
         Set<ConstraintViolation<Contact>> violations = validator.validate(contact);
 
@@ -115,13 +94,18 @@ public class ContactTest {
 
     @Test
     public void a_valid_contact_should_not_have_constraints_violations() throws Exception {
-        Contact contact = new Contact();
-        contact.setFirstName(A_VALID_FIRST_NAME);
-        contact.setLastName(A_VALID_LAST_NAME);
-        contact.setPhoneNumber(A_VALID_NUMBER);
+        Contact contact = aContact(A_VALID_FIRST_NAME, A_VALID_LAST_NAME, A_VALID_NUMBER);
 
         Set<ConstraintViolation<Contact>> violations = validator.validate(contact);
 
         assertThat(violations, is(empty()));
+    }
+
+    public static Contact aContact(String anEmptyString, String aValidLastName, String aValidNumber) {
+        Contact contact = new Contact();
+        contact.setFirstName(anEmptyString);
+        contact.setLastName(aValidLastName);
+        contact.setPhoneNumber(aValidNumber);
+        return contact;
     }
 }

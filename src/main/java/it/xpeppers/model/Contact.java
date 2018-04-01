@@ -1,19 +1,20 @@
 package it.xpeppers.model;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Pattern;
+
+import static javax.persistence.GenerationType.AUTO;
+import static org.apache.commons.lang3.builder.EqualsBuilder.reflectionEquals;
 
 @Entity
 public class Contact {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = AUTO)
     private Integer id;
 
     @NotEmpty
@@ -59,7 +60,7 @@ public class Contact {
 
     @Override
     public boolean equals(Object obj) {
-        return EqualsBuilder.reflectionEquals(this, obj);
+        return reflectionEquals(this, obj);
     }
 
     public void update(Contact update) {

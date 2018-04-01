@@ -1,8 +1,8 @@
 package it.xpeppers.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import it.xpeppers.repository.ContactRepository;
 import it.xpeppers.model.Contact;
+import it.xpeppers.repository.ContactRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.io.IOException;
 
+import static it.xpeppers.model.ContactTest.aContact;
 import static java.util.Collections.singletonList;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
@@ -43,21 +44,13 @@ public class ContactControllerTest {
 
     @Before
     public void setUp() throws Exception {
-        mockMvc = standaloneSetup(controller)
-                .build();
-    }
-
-    private String json(Object o) throws IOException {
-        return new ObjectMapper().writeValueAsString(o);
+        mockMvc = standaloneSetup(controller).build();
     }
 
     @Test
     public void returns_all_contacts() throws Exception {
-        Contact contact = new Contact();
+        Contact contact = aContact(FIRST_NAME, LAST_NAME, TELEPHONE_NUMBER);
         contact.setId(ID);
-        contact.setFirstName(FIRST_NAME);
-        contact.setLastName(LAST_NAME);
-        contact.setPhoneNumber(TELEPHONE_NUMBER);
 
         when(repository.findAll()).thenReturn(singletonList(contact));
 
@@ -72,15 +65,12 @@ public class ContactControllerTest {
 
     @Test
     public void returns_a_contact_with_a_given_id() throws Exception {
-        Contact contact = new Contact();
+        Contact contact = aContact(FIRST_NAME, LAST_NAME, TELEPHONE_NUMBER);
         contact.setId(ID);
-        contact.setFirstName(FIRST_NAME);
-        contact.setLastName(LAST_NAME);
-        contact.setPhoneNumber(TELEPHONE_NUMBER);
 
         when(repository.findOne(ID)).thenReturn(contact);
 
-        mockMvc.perform(get("/contacts/"+ ID))
+        mockMvc.perform(get("/contacts/" + ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(ID)))
                 .andExpect(jsonPath("$.firstName", is(FIRST_NAME)))
@@ -90,23 +80,17 @@ public class ContactControllerTest {
 
     @Test
     public void saves_a_valid_contact() throws Exception {
-        Contact savedContact = new Contact();
+        Contact savedContact = aContact(FIRST_NAME, LAST_NAME, TELEPHONE_NUMBER);
         savedContact.setId(ID);
-        savedContact.setFirstName(FIRST_NAME);
-        savedContact.setLastName(LAST_NAME);
-        savedContact.setPhoneNumber(TELEPHONE_NUMBER);
 
-        Contact contact = new Contact();
-        contact.setFirstName(FIRST_NAME);
-        contact.setLastName(LAST_NAME);
-        contact.setPhoneNumber(TELEPHONE_NUMBER);
+        Contact contact = aContact(FIRST_NAME, LAST_NAME, TELEPHONE_NUMBER);
 
         when(repository.save(contact)).thenReturn(savedContact);
 
         mockMvc.perform(post("/contacts")
                 .contentType(APPLICATION_JSON)
                 .content(json(contact)))
-                .andExpect(header().string("Location", "/contacts/"+ID))
+                .andExpect(header().string("Location", "/contacts/" + ID))
                 .andExpect(status().isCreated());
     }
 
@@ -131,12 +115,9 @@ public class ContactControllerTest {
 
         when(repository.findOne(ID)).thenReturn(contact);
 
-        Contact update = new Contact();
-        update.setFirstName(ANOTHER_FIRST_NAME);
-        update.setLastName(LAST_NAME);
-        update.setPhoneNumber(TELEPHONE_NUMBER);
+        Contact update = aContact(ANOTHER_FIRST_NAME, LAST_NAME, TELEPHONE_NUMBER);
 
-        mockMvc.perform(put("/contacts/"+ID)
+        mockMvc.perform(put("/contacts/" + ID)
                 .contentType(APPLICATION_JSON)
                 .content(json(update)))
                 .andExpect(status().isNoContent());
@@ -160,9 +141,13 @@ public class ContactControllerTest {
 
         when(repository.findOne(ID)).thenReturn(contact);
 
-        mockMvc.perform(delete("/contacts/"+ID))
+        mockMvc.perform(delete("/contacts/" + ID))
                 .andExpect(status().isNoContent());
 
         verify(repository).delete(eq(contact));
+    }
+
+    private String json(Object o) throws IOException {
+        return new ObjectMapper().writeValueAsString(o);
     }
 }
